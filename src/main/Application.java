@@ -6,7 +6,7 @@ import java.util.InputMismatchException;
 import java.util.Map;
 import java.util.Scanner;
 
-import exception.BuyException;
+import exceptions.BuyException;
 import models.Product;
 
 public class Application {
