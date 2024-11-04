@@ -21,26 +21,42 @@ public class Application {
 	}
 
 	private static void menu() {
-		
-		System.out.println("_________________________________________________________________________________");
-		System.out.println("|-------------------------------------------------------------------------------|");
-		System.out.println("|--------------------------Welcome to Daniel's Market---------------------------|");
-		System.out.println("|-------------------------------------------------------------------------------|");
-		System.out.println("|-----------------------------Select an option----------------------------------|");
-		System.out.println("|-------------------------------------------------------------------------------|");
-		System.out.println("|-------------------------| 1 - Resgister a product |---------------------------|");
-		System.out.println("|-------------------------| 2 - List all products   |---------------------------|");
-		System.out.println("|-------------------------| 3 - Buy                 |---------------------------|");
-		System.out.println("|-------------------------| 4 - Cart                |---------------------------|");
-		System.out.println("|-------------------------| 5 - Exit                |---------------------------|");
-		System.out.println("|-------------------------------------------------------------------------------|");
-		System.out.println("|_______________________________________________________________________________|");
 
+		int option = 0;
+		do {
+			System.out.println("_________________________________________________________________________________");
+			System.out.println("|-------------------------------------------------------------------------------|");
+			System.out.println("|--------------------------Welcome to Daniel's Market---------------------------|");
+			System.out.println("|-------------------------------------------------------------------------------|");
+			System.out.println("|-----------------------------Select an option----------------------------------|");
+			System.out.println("|-------------------------------------------------------------------------------|");
+			System.out.println("|-------------------------| 1 - Resgister a product |---------------------------|");
+			System.out.println("|-------------------------| 2 - List all products   |---------------------------|");
+			System.out.println("|-------------------------| 3 - Buy                 |---------------------------|");
+			System.out.println("|-------------------------| 4 - Cart                |---------------------------|");
+			System.out.println("|-------------------------| 5 - Exit                |---------------------------|");
+			System.out.println("|-------------------------------------------------------------------------------|");
+			System.out.println("|_______________________________________________________________________________|");
 			System.out.print("Option: ");
+
 			try {
-			int option = sc.nextInt();
-			System.out.println();
-			
+				option = sc.nextInt();
+				System.out.println();
+			}
+
+			catch (InputMismatchException e) {
+				System.out.println("Invalid Input, please enter a number. MAIN");
+				sc.nextLine();
+				menu();
+				continue;
+			} 
+			catch (RuntimeException e) {
+				System.out.println("Unexpected error.");
+				sc.nextLine();
+				menu();
+				continue;
+			}
+
 			switch (option) {
 			case 1:
 				registerProduct();
@@ -60,34 +76,53 @@ public class Application {
 
 			case 5:
 				System.out.println("Thank you! Have a nice day!");
+				option = 0;
 				break;
 
 			default:
-				System.out.println("Invalid number!");
+				System.out.println("Invalid number! Please enter a valid number.");
+				menu();
 				break;
 			}
-		}
-		catch (InputMismatchException e) {
-			System.out.println("Invalid Input, please type a number.");
-		}
+		} 
+		while (option != 0);
+		sc.close();
 	}
 
 	private static void registerProduct() {
-		/*
-		 * System.out.print("Product name: "); String name = sc.next();
-		 * System.out.print("Product price: "); Double price = sc.nextDouble();
-		 * System.out.println("Product registered successfully!");
+
+		System.out.print("Product name: ");
+		String name = null;
+		sc.nextLine();
+		name = sc.nextLine();
+		Double price = null;
+		boolean helper = true;
+		do {
+			try {
+				System.out.print("Product price: ");
+				price = sc.nextDouble();
+				helper = true;
+			} 
+			catch (InputMismatchException e) {
+				System.out.println("Invalid price! Please provide a valid price. \n");
+				sc.nextLine();
+				helper = false;
+				continue;
+			}
+		}
+		while (!helper);
+		
+		if (name != null && price != null) {
+			System.out.println("Product registered successfully!");
+			listProducts.add(new Product(name, price));
+		}
+
+		/* Tests
+		 Product p1 = new Product("Xbox 360", 500.0); 
+		 Product p2 = new Product("Playstation 3", 650.0); 
+		 Product p3 = new Product("Pc Gamer", 8500.0); 
+		 listProducts.add(p1); listProducts.add(p2); listProducts.add(p3);
 		 */
-		
-		// tests
-		Product p1 = new Product("Xbox 360", 500.0);
-		Product p2 = new Product("Playstation 3", 650.0);
-		Product p3 = new Product("Pc Gamer", 8500.0);
-		listProducts.add(p1);
-		listProducts.add(p2);
-		listProducts.add(p3);
-		
-		// listProducts.add(new Product(name, price));
 		menu();
 	}
 
@@ -99,7 +134,8 @@ public class Application {
 				System.out.println(a + " - " + p);
 				a += 1;
 			}
-		} else {
+		} 
+		else {
 			System.out.println("No registered products");
 		}
 		menu();
@@ -115,7 +151,7 @@ public class Application {
 			}
 
 			System.out.print("Select a product: ");
-			
+
 			int id = Integer.parseInt(sc.next());
 			boolean isPresent = false;
 
@@ -124,8 +160,9 @@ public class Application {
 					int quant = 0;
 					try {
 						quant = cart.get(p);
-						cart.put(p, quant +1); // Checks if the product is in the cart.
-					} catch (NullPointerException e) {
+						cart.put(p, quant + 1); // Checks if the product is in the cart.
+					} 
+					catch (NullPointerException e) {
 						// if the product is the first in the cart
 						cart.put(p, 1);
 					}
@@ -135,14 +172,14 @@ public class Application {
 
 					if (isPresent) {
 						OptionsBuyProducts();
-					} 
+					}
 					else {
 						System.out.println("Product not found.");
 						menu();
 					}
 				}
 			}
-		} 
+		}
 		else {
 			System.out.println("Product not available.");
 			menu();
@@ -156,12 +193,12 @@ public class Application {
 				System.out.println("Product: " + p + " Amount: " + cart.get(p));
 			}
 			OptionsCartItems();
-		}
+		} 
 		else {
 			System.out.println("------Your cart is empty------");
 			menu();
 		}
-		
+
 	}
 
 	private static void finalizePurchase() {
@@ -181,7 +218,7 @@ public class Application {
 		cart.clear();
 		menu();
 	}
-	
+
 	private static void OptionsBuyProducts() {
 		System.out.println("Would you like to add another product to the cart?");
 		System.out.println("Press 1 to YES, 2 to return to menu or 3 to finalize your purchase");
@@ -201,9 +238,9 @@ public class Application {
 			System.out.println("Invalid option, returning to Menu.");
 			break;
 		}
-		
+
 	}
-	
+
 	private static void OptionsCartItems() {
 		System.out.println("------What would you like to do?------");
 		System.out.println("1 - Add another product");
@@ -216,15 +253,15 @@ public class Application {
 		case 1:
 			buyProducts();
 			break;
-		
+
 		case 2:
 			menu();
 			break;
-		
+
 		case 3:
 			finalizePurchase();
 			break;
-		
+
 		case 4:
 			System.out.println("Enter the ID of the product to be removed from the cart:");
 			int id = Integer.parseInt(sc.next());
@@ -235,7 +272,8 @@ public class Application {
 			}
 			cartItems();
 			break;
-		default:
+			
+	    default:
 			System.out.println("Invalid option, returning to Menu.");
 			break;
 		}
