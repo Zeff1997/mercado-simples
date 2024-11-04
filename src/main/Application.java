@@ -6,6 +6,7 @@ import java.util.InputMismatchException;
 import java.util.Map;
 import java.util.Scanner;
 
+import exception.BuyException;
 import models.Product;
 
 public class Application {
@@ -18,11 +19,12 @@ public class Application {
 		listProducts = new ArrayList<>();
 		cart = new HashMap<>();
 		menu();
+		sc.close();
 	}
 
 	private static void menu() {
 
-		int option = 0;
+		int option = 1;
 		do {
 			System.out.println("_________________________________________________________________________________");
 			System.out.println("|-------------------------------------------------------------------------------|");
@@ -45,7 +47,7 @@ public class Application {
 			}
 
 			catch (InputMismatchException e) {
-				System.out.println("Invalid Input, please enter a number. MAIN");
+				System.out.println("Invalid Input, please enter a number.");
 				sc.nextLine();
 				menu();
 				continue;
@@ -76,7 +78,8 @@ public class Application {
 
 			case 5:
 				System.out.println("Thank you! Have a nice day!");
-				option = 0;
+				System.exit(0);
+				//option = 0;
 				break;
 
 			default:
@@ -86,11 +89,11 @@ public class Application {
 			}
 		} 
 		while (option != 0);
-		sc.close();
 	}
 
 	private static void registerProduct() {
 
+		
 		System.out.print("Product name: ");
 		String name = null;
 		sc.nextLine();
@@ -111,12 +114,11 @@ public class Application {
 			}
 		}
 		while (!helper);
-		
 		if (name != null && price != null) {
 			System.out.println("Product registered successfully!");
 			listProducts.add(new Product(name, price));
 		}
-
+		
 		/* Tests
 		 Product p1 = new Product("Xbox 360", 500.0); 
 		 Product p2 = new Product("Playstation 3", 650.0); 
@@ -150,21 +152,54 @@ public class Application {
 				a += 1;
 			}
 
-			System.out.print("Select a product: ");
-
-			int id = Integer.parseInt(sc.next());
+			int id = 1;
+			int quantItem = 1;
+			do {
+				try {
+					
+					System.out.print("Select a product: ");
+					id = Integer.parseInt(sc.next());
+					if (id < 1 || id > listProducts.size()) {
+						throw new BuyException("Please enter a valid Id product.\n");
+					}
+				
+					System.out.print("Quantity you would like to add to cart: ");
+					quantItem = Integer.parseInt(sc.next());
+					if (quantItem <= 0) {
+						throw new BuyException("Please enter a valid quantity.\n");	
+					}
+				}
+				catch(NumberFormatException e) {
+					System.out.println("Invalid Input! Please enter a number.\n");
+					sc.nextLine();
+					buyProducts();
+				}
+				catch (InputMismatchException e) {
+					System.out.println("Invalid Input! Please enter a number.\n");
+					sc.nextLine();
+					buyProducts();	
+				} 
+				catch (BuyException e) {
+					System.out.println(e.getMessage());
+					buyProducts();
+				}
+				catch (RuntimeException e) {
+					System.out.println("Unexpected Error.");
+				}
+			}
+			while( quantItem <= 0);
+			
 			boolean isPresent = false;
-
 			for (Product p : listProducts) {
 				if (p.getId() == id) {
-					int quant = 0;
+					
 					try {
-						quant = cart.get(p);
-						cart.put(p, quant + 1); // Checks if the product is in the cart.
+						quantItem = cart.get(p);
+						cart.put(p, quantItem); // Checks if the product is in the cart.
 					} 
 					catch (NullPointerException e) {
 						// if the product is the first in the cart
-						cart.put(p, 1);
+						cart.put(p, quantItem);
 					}
 					System.out.println(p.getName() + " has been added to cart");
 					System.out.println();
@@ -198,7 +233,6 @@ public class Application {
 			System.out.println("------Your cart is empty------");
 			menu();
 		}
-
 	}
 
 	private static void finalizePurchase() {
@@ -221,24 +255,30 @@ public class Application {
 
 	private static void OptionsBuyProducts() {
 		System.out.println("Would you like to add another product to the cart?");
-		System.out.println("Press 1 to YES, 2 to return to menu or 3 to finalize your purchase");
+		System.out.println("Press 1 to Yes \nPress2 to return to menu \nPress 3 to view your cart \nPress 4 to to finalize your purchase");
 		int option = Integer.parseInt(sc.next());
 		System.out.println();
 		switch (option) {
 		case 1:
 			buyProducts();
 			break;
+			
 		case 2:
 			menu();
 			break;
+			
 		case 3:
+			cartItems();
+			break;
+			
+		case 4:
 			finalizePurchase();
 			break;
+			
 		default:
 			System.out.println("Invalid option, returning to Menu.");
 			break;
 		}
-
 	}
 
 	private static void OptionsCartItems() {
@@ -278,5 +318,4 @@ public class Application {
 			break;
 		}
 	}
-
 }
