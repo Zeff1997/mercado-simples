@@ -6,6 +6,7 @@ import java.util.InputMismatchException;
 import java.util.Map;
 import java.util.Scanner;
 
+import Color.ConsoleColors;
 import exceptions.BuyException;
 import models.Product;
 
@@ -26,19 +27,19 @@ public class Application {
 
 		int option = 1;
 		do {
-			System.out.println("_________________________________________________________________________________");
-			System.out.println("|-------------------------------------------------------------------------------|");
-			System.out.println("|--------------------------Welcome to Daniel's Market---------------------------|");
-			System.out.println("|-------------------------------------------------------------------------------|");
-			System.out.println("|-----------------------------Select an option----------------------------------|");
-			System.out.println("|-------------------------------------------------------------------------------|");
-			System.out.println("|-------------------------| 1 - Resgister a product |---------------------------|");
-			System.out.println("|-------------------------| 2 - List all products   |---------------------------|");
-			System.out.println("|-------------------------| 3 - Buy                 |---------------------------|");
-			System.out.println("|-------------------------| 4 - Cart                |---------------------------|");
-			System.out.println("|-------------------------| 5 - Exit                |---------------------------|");
-			System.out.println("|-------------------------------------------------------------------------------|");
-			System.out.println("|_______________________________________________________________________________|");
+			System.out.println(ConsoleColors.GREEN + "_________________________________________________________________________________" + ConsoleColors.RESET);
+			System.out.println(ConsoleColors.GREEN +"|-------------------------------------------------------------------------------|" + ConsoleColors.RESET);
+			System.out.println(ConsoleColors.GREEN +"|--------------------------" + ConsoleColors.RESET + "Welcome to Daniel's Market"+ ConsoleColors.GREEN +"---------------------------|" + ConsoleColors.RESET);
+			System.out.println(ConsoleColors.GREEN +"|-------------------------------------------------------------------------------|" + ConsoleColors.RESET);
+			System.out.println(ConsoleColors.GREEN +"|-----------------------------" + ConsoleColors.RESET + "Select an option" + ConsoleColors.GREEN +"----------------------------------|" + ConsoleColors.RESET);
+			System.out.println(ConsoleColors.GREEN +"|-------------------------------------------------------------------------------|" + ConsoleColors.RESET);
+			System.out.println(ConsoleColors.GREEN +"|-------------------------|" + ConsoleColors.RESET+ " 1 - Resgister a product " + ConsoleColors.GREEN + "|---------------------------|" + ConsoleColors.RESET);
+			System.out.println(ConsoleColors.GREEN +"|-------------------------|" + ConsoleColors.RESET + " 2 - List all products   "+ ConsoleColors.GREEN + "|---------------------------|" + ConsoleColors.RESET);
+			System.out.println(ConsoleColors.GREEN +"|-------------------------|" + ConsoleColors.RESET + " 3 - Buy                 " + ConsoleColors.GREEN +"|---------------------------|" + ConsoleColors.RESET);
+			System.out.println(ConsoleColors.GREEN + "|-------------------------|" + ConsoleColors.RESET + " 4 - Cart                " + ConsoleColors.GREEN + "|---------------------------|" + ConsoleColors.RESET);
+			System.out.println(ConsoleColors.GREEN + "|-------------------------|" + ConsoleColors.RED +" 5 - Exit                "+ ConsoleColors.GREEN + "|---------------------------|" + ConsoleColors.RESET);
+			System.out.println( ConsoleColors.GREEN +"|-------------------------------------------------------------------------------|" + ConsoleColors.RESET);
+			System.out.println(ConsoleColors.GREEN + "|_______________________________________________________________________________|" + ConsoleColors.RESET);
 			System.out.print("Option: ");
 
 			try {
@@ -75,7 +76,7 @@ public class Application {
 				break;
 
 			case 5:
-				System.out.println("Thank you! Have a nice day!");
+				System.out.println(ConsoleColors.CYAN +"Thank you! Have a nice day!" + ConsoleColors.RESET);
 				System.exit(0);
 				//option = 0;
 				break;
