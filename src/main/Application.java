@@ -49,13 +49,11 @@ public class Application {
 			catch (InputMismatchException e) {
 				System.out.println("Invalid Input, please enter a number.");
 				sc.nextLine();
-				menu();
 				continue;
 			} 
 			catch (RuntimeException e) {
 				System.out.println("Unexpected error.");
 				sc.nextLine();
-				menu();
 				continue;
 			}
 
@@ -84,7 +82,6 @@ public class Application {
 
 			default:
 				System.out.println("Invalid number! Please enter a valid number.");
-				menu();
 				break;
 			}
 		} 
@@ -125,7 +122,7 @@ public class Application {
 		 Product p3 = new Product("Pc Gamer", 8500.0); 
 		 listProducts.add(p1); listProducts.add(p2); listProducts.add(p3);
 		 */
-		menu();
+		
 	}
 
 	private static void listProducts() {
@@ -140,7 +137,7 @@ public class Application {
 		else {
 			System.out.println("No registered products");
 		}
-		menu();
+		
 	}
 
 	private static void buyProducts() {
@@ -210,14 +207,14 @@ public class Application {
 					}
 					else {
 						System.out.println("Product not found.");
-						menu();
+						
 					}
 				}
 			}
 		}
 		else {
 			System.out.println("Product not available.");
-			menu();
+			
 		}
 	}
 
@@ -231,7 +228,7 @@ public class Application {
 		} 
 		else {
 			System.out.println("------Your cart is empty------");
-			menu();
+			
 		}
 	}
 
@@ -250,12 +247,12 @@ public class Application {
 		System.out.println("The purchase price is: " + utils.Format.doubleToString(purchaseValue));
 		System.out.println("Thank you for your purchase, come back soon.");
 		cart.clear();
-		menu();
+		
 	}
 
 	private static void OptionsBuyProducts() {
 		System.out.println("Would you like to add another product to the cart?");
-		System.out.println("Press 1 to Yes \nPress2 to return to menu \nPress 3 to view your cart \nPress 4 to to finalize your purchase");
+		System.out.println("Press 1 to Yes \nPress 2 to return to menu \nPress 3 to view your cart \nPress 4 to to finalize your purchase");
 		int option = Integer.parseInt(sc.next());
 		System.out.println();
 		switch (option) {
